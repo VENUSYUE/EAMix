@@ -60,28 +60,6 @@ print(evaluate(y_true, labels))     # {'AUC': ..., 'F1': ..., 'ACC': ..., 'NMI':
 After `fit`, `model.representation_` holds `H`, `model.coordinates_` holds `Y_sp`, and `model.info_`
 records the propagation residual, retained spectral rank and correction certificate.
 
-## Configuration
-
-The same configuration is used for every graph (`EAMixConfig` defaults):
-
-| Parameter | Value | Meaning |
-|---|---|---|
-| `rank` | 128 | maximum retained attribute directions `r` |
-| `n_neighbors` / `n_candidates` | 32 / 256 | attribute neighbors `k_A` per edge / candidate budget |
-| `alpha` | 0.85 | walk continuation probability |
-| `kappa` | 0.4 | coupling strength |
-| `omega_T` | 0.5 | topology layer weight (`ω_A = 1 - ω_T`) |
-| `rho` | 0.496 | output share of the topology response |
-| `lam` | 0.35 | correction strength `λ` |
-| `eta_min` | 0.1 | anchor-fidelity floor |
-| `n_init`, `random_state` | 10, 0 | k-Means initializations and seed |
-| `correction_tol`, `correction_max_iter` | 1e-6, 80 | correction stopping rule (`ε_c`, `T_c`) |
-
-Any field can be overridden, e.g. `EAMix(kappa=0.2, lam=0.5)`.
-
-The coupled walk has a unique fixed point. `solver="bicgstab"` (default) computes it with blocked,
-residual-refined BiCGSTAB; `solver="fixed_point"` runs the synchronous iteration of Algorithm CDLERW.
-Both are checked against a relative residual below `1e-9`.
 
 ## Tests
 
